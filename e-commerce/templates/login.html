@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="auth-wrapper">
+
+    <h1 class="title">TOKLEN ಠಿ_ಠ</h1>
+
+    <div class="form-container">
+        <h2>Login</h2>
+
+        <form id="loginForm">
+            <input type="email" id="email" placeholder="Email" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+
+        <p class="switch-text">
+            Belum punya akun? 
+            <a href="/register">Daftar disini</a>
+        </p>
+    </div>
+
+</div>
+
+<script>
+document.getElementById("loginForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    fetch("/login", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            email: email.value,
+            password: password.value
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        alert(data.message);
+
+        if (data.message === "Login berhasil") {
+            localStorage.setItem("login", "true");
+            window.location.href = "/products";
+        }
+    })
+    .catch(() => alert("Server error"));
+});
+</script>
+
+</body>
+</html>
